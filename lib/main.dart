@@ -1,10 +1,11 @@
-import 'package:flame/util.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:snaake/game/blocs/game_bloc.dart';
 import 'package:snaake/game/screens/game_screen.dart';
 
-void main() => 
-  runApp(MainApp());
+void main() => runApp(MainApp());
 
 class MainApp extends StatelessWidget {
   @override
@@ -14,7 +15,12 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: GameScreen(),
+      home: BlocProvider(
+        create: (context) => GameBloc(
+          random: Random(),
+        ),
+        child: GameScreen(),
+      ),
     );
   }
 }
