@@ -668,4 +668,121 @@ void main() {
       ],
     );
   });
+
+  group('test snake biting itself', () {
+    GameState _state(
+      List<Vec2d> snake, {
+      Food food,
+      int score,
+      Vec2d velocity,
+      Status status,
+    }) {
+      return GameState(
+        status: status ?? Status.running,
+        score: score ?? 0,
+        food: food ?? Food(x: 2, y: 16, score: 1),
+        snake: Snake(Queue.from(snake)),
+        velocity: velocity ?? Vec2d(0, -1),
+        board: Board(10, 20),
+      );
+    }
+
+    blocTest(
+      'bite itself',
+      build: () async => GameBloc(
+        random: Random(200),
+        snakeInitialLength: 6,
+      ),
+      skip: 3,
+      act: (bloc) async {
+        bloc
+          ..add(LoadAssetsEvent())
+          ..add(OnBoardCreatedEvent(Board(10, 20)))
+          ..add(UpdateGame())
+          ..add(OnKeyPressedEvent(LogicalKeyboardKey.arrowRight))
+          ..add(UpdateGame())
+          ..add(OnKeyPressedEvent(LogicalKeyboardKey.arrowDown))
+          ..add(UpdateGame())
+          ..add(OnKeyPressedEvent(LogicalKeyboardKey.arrowLeft))
+          ..add(UpdateGame());
+      },
+      expect: [
+        _state([
+          Vec2d(5, 10),
+          Vec2d(5, 11),
+          Vec2d(5, 12),
+          Vec2d(5, 13),
+          Vec2d(5, 14),
+          Vec2d(5, 15),
+        ]),
+        _state(
+          [
+            Vec2d(5, 10),
+            Vec2d(5, 11),
+            Vec2d(5, 12),
+            Vec2d(5, 13),
+            Vec2d(5, 14),
+            Vec2d(5, 15),
+          ],
+          velocity: Vec2d(1, 0),
+        ),
+        _state(
+          [
+            Vec2d(6, 10),
+            Vec2d(5, 10),
+            Vec2d(5, 11),
+            Vec2d(5, 12),
+            Vec2d(5, 13),
+            Vec2d(5, 14),
+          ],
+          velocity: Vec2d(1, 0),
+        ),
+        _state(
+          [
+            Vec2d(6, 10),
+            Vec2d(5, 10),
+            Vec2d(5, 11),
+            Vec2d(5, 12),
+            Vec2d(5, 13),
+            Vec2d(5, 14),
+          ],
+          velocity: Vec2d(0, 1),
+        ),
+        _state(
+          [
+            Vec2d(6, 11),
+            Vec2d(6, 10),
+            Vec2d(5, 10),
+            Vec2d(5, 11),
+            Vec2d(5, 12),
+            Vec2d(5, 13),
+          ],
+          velocity: Vec2d(0, 1),
+        ),
+        _state(
+          [
+            Vec2d(6, 11),
+            Vec2d(6, 10),
+            Vec2d(5, 10),
+            Vec2d(5, 11),
+            Vec2d(5, 12),
+            Vec2d(5, 13),
+          ],
+          velocity: Vec2d(-1, 0),
+        ),
+        _state(
+          [
+            Vec2d(6, 11),
+            Vec2d(6, 10),
+            Vec2d(5, 10),
+            Vec2d(5, 11),
+            Vec2d(5, 12),
+            Vec2d(5, 13),
+          ],
+          velocity: Vec2d(-1, 0),
+          status: Status.gameOver,
+        ),
+      ],
+    );
+  });
 }

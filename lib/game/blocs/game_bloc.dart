@@ -19,7 +19,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   GameBloc({
     @required this.random,
     this.flameManager,
-  }) : assert(random != null) {
+    this.snakeInitialLength = 4,
+  })  : assert(random != null),
+        assert(snakeInitialLength >= 4) {
     add(LoadAssetsEvent());
   }
 
@@ -28,6 +30,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
   /// Random generator. Used to create a random food position.
   final Random random;
+
+  /// The snake initial length. Default value is 4.
+  final int snakeInitialLength;
 
   @override
   GameState get initialState {
@@ -56,7 +61,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   Snake _newSnake() {
     final x = state.board.width ~/ 2;
     final y = state.board.height ~/ 2;
-    return Snake.fromPosition(x, y, 4);
+    return Snake.fromPosition(x, y, snakeInitialLength);
   }
 
   Food _getRandomFood() {
@@ -75,10 +80,11 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     var status = state.status;
 
     // Check if the snake hit the wall
-    if (newSnake.head.x >= state.board.width || newSnake.head.x < 0) {
+    if ((newSnake.head.x >= state.board.width || newSnake.head.x < 0) ||
+        (newSnake.head.y >= state.board.height || newSnake.head.y < 0)) {
       newSnake = state.snake;
       status = Status.gameOver;
-    } else if (newSnake.head.y >= state.board.height || newSnake.head.y < 0) {
+    } else if (newSnake.hasBitenItself()) {
       newSnake = state.snake;
       status = Status.gameOver;
     } else {
