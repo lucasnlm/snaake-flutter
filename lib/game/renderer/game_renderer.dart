@@ -7,8 +7,8 @@ import '../../ui/colors.dart';
 import '../models/board.dart';
 import '../models/food.dart';
 import '../models/snake.dart';
-import '../renderer/snake_renderer.dart';
-import 'food_renderer.dart';
+import 'board_component.dart';
+import 'snake_component.dart';
 
 /// Main game render. Used to render the game screeen.
 class GameRenderer extends Game {
@@ -20,8 +20,8 @@ class GameRenderer extends Game {
     @required this.board,
     @required this.tileSize,
   }) {
-    _foodSprite = FoodRenderer(tileSize);
-    _snakeRenderer = SnakeRenderer(tileSize);
+    _food = BoardComponent('food/food.png', tileSize);
+    _snake = SnakeComponent(tileSize);
   }
 
   /// The real screen size.
@@ -33,17 +33,21 @@ class GameRenderer extends Game {
   /// The tile size used to render the food and snake.
   final double tileSize;
 
-  FoodRenderer _foodSprite;
-  SnakeRenderer _snakeRenderer;
+  BoardComponent _food;
+  SnakeComponent _snake;
 
   /// Called to update the [Food] position.
   void updateFood(Food food) {
-    _foodSprite.updateFood(food);
+    if (food != null) {
+      _food
+        ..x = food.x * tileSize
+        ..y = food.y * tileSize;
+    }
   }
 
   /// Called to update the [Snake] positions.
   void updateSnake(Snake snake) {
-    _snakeRenderer.updateSnake(snake);
+    _snake.updateSnake(snake);
   }
 
   @override
@@ -53,8 +57,8 @@ class GameRenderer extends Game {
 
     _drawBackground(canvas);
 
-    _foodSprite.render(canvas);
-    _snakeRenderer.render(canvas);
+    _food.render(canvas);
+    _snake.render(canvas);
 
     canvas.restore();
   }

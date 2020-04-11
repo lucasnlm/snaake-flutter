@@ -17,6 +17,10 @@ class FlameManager with IFlameManager {
     await Flame.images.loadAll(<String>[
       'food/food.png',
       'food/red_food.png',
+      'snake/head.png',
+      'snake/body.png',
+      'snake/body_curve.png',
+      'snake/tail.png',
     ]);
   }
 }

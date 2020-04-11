@@ -19,7 +19,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   GameBloc({
     @required this.random,
     this.flameManager,
-    this.snakeInitialLength = 4,
+    this.snakeInitialLength = 9,
   })  : assert(random != null),
         assert(snakeInitialLength >= 4) {
     add(LoadAssetsEvent());
