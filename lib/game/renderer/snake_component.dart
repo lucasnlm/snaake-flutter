@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:math';
 import 'dart:ui';
 
@@ -69,7 +70,12 @@ class SnakeComponent extends Component {
   /// Update the snake position using [snake] info.
   void updateSnake(Snake snake) {
     if (snake != null) {
-      final snakeBody = snake.body.toList();
+      final snakeBody = LinkedHashSet.from(snake.body).toList();
+
+      if (snakeBody[0].x == snakeBody[1].x &&
+          snakeBody[0].y == snakeBody[1].y) {
+        print('gfuuuuu');
+      }
 
       _snakeBody = <BoardComponent>[
         _buildHead(
@@ -98,8 +104,6 @@ class SnakeComponent extends Component {
       for (var part in _snakeBody) {
         part.render(canvas);
       }
-
-      //_snakeBody.first.render(canvas);
     }
   }
 

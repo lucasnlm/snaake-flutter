@@ -7,7 +7,7 @@ import '../models/vec2d.dart';
 /// Represents the Snake.
 class Snake extends Equatable {
   /// Creates a Snake given its body positions.
-  Snake(this.body) : assert(body != null && body.length > 3);
+  Snake(this.body) : assert(body != null && body.length >= 4);
 
   /// Creates a Snake given the head position and its length.
   Snake.fromPosition(int x, int y, int length)
@@ -43,10 +43,10 @@ class Snake extends Equatable {
     );
   }
 
-  /// Eats a food at position [foodPosition] returning the new Snake body.
-  Snake eat(Vec2d foodPosition) {
+  /// Eats a food at position [x] and [y] returning the new Snake body.
+  Snake eat(int x, int y) {
     return Snake(
-      Queue<Vec2d>.from(body)..addFirst(foodPosition),
+      Queue<Vec2d>.from(body)..addFirst(Vec2d(x, y)),
     );
   }
 

@@ -96,7 +96,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     } else {
       if (newSnake.canEat(food)) {
         score += food.score;
-        newSnake = newSnake.eat(food);
+        newSnake = newSnake.eat(food.x, food.y);
         food = null;
       }
 
