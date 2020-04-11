@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:snaake/game/blocs/game_bloc.dart';
-import 'package:snaake/game/blocs/game_events.dart';
-import 'package:snaake/game/blocs/game_state.dart';
-import 'package:snaake/game/models/board.dart';
-import 'package:snaake/game/models/status.dart';
-import 'package:snaake/game/renderer/game_renderer.dart';
-import 'package:snaake/game/widgetss/loading.dart';
 
+import '../blocs/game_bloc.dart';
+import '../blocs/game_events.dart';
+import '../blocs/game_state.dart';
+import '../models/board.dart';
+import '../models/status.dart';
+import '../renderer/game_renderer.dart';
+import '../widgetss/loading.dart';
+
+/// Main game screen.
 class GameScreen extends StatelessWidget {
+  /// Conveninent constructor.
   GameScreen({
     Key key,
   }) : super(key: key);
@@ -73,9 +76,9 @@ class GameScreen extends StatelessWidget {
             _gameRenderer.updateSnake(state.snake);
           },
           child: BlocBuilder<GameBloc, GameState>(
-            condition: (before, after) => before.status != Status.Loading,
+            condition: (before, after) => before.status != Status.loading,
             builder: (context, state) {
-              return state.status == Status.Loading
+              return state.status == Status.loading
                   ? Loading()
                   : _gameRenderer.widget;
             },

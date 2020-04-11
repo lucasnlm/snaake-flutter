@@ -15,7 +15,7 @@ import 'package:snaake/game/models/vec2d.dart';
 
 GameState _stateY(int y, {Food food, int score}) {
   return GameState(
-    status: Status.Running,
+    status: Status.running,
     score: score ?? 0,
     food: food ?? Food(x: 2, y: 16, score: 1),
     snake: Snake.fromPosition(5, y, 4),
@@ -33,7 +33,7 @@ void main() {
       Vec2d velocity,
     }) {
       return GameState(
-        status: Status.Running,
+        status: Status.running,
         score: score ?? 0,
         food: food ?? Food(x: 2, y: 16, score: 1),
         snake: Snake(Queue.from(snake)),
@@ -408,7 +408,7 @@ void main() {
       Status status,
     }) {
       return GameState(
-        status: status ?? Status.Running,
+        status: status ?? Status.running,
         score: score ?? 0,
         food: food ?? Food(x: 3, y: 0, score: 1),
         snake: Snake(Queue.from(snake)),
@@ -457,7 +457,7 @@ void main() {
             Vec2d(2, 2),
             Vec2d(2, 3),
           ],
-          status: Status.GameOver,
+          status: Status.gameOver,
         ),
       ],
     );
@@ -519,7 +519,7 @@ void main() {
             Vec2d(2, 3),
           ],
           velocity: Vec2d(-1, 0),
-          status: Status.GameOver,
+          status: Status.gameOver,
         ),
       ],
     );
@@ -581,7 +581,7 @@ void main() {
             Vec2d(2, 3),
           ],
           velocity: Vec2d(1, 0),
-          status: Status.GameOver,
+          status: Status.gameOver,
         ),
       ],
     );
@@ -663,7 +663,7 @@ void main() {
             Vec2d(2, 2),
           ],
           velocity: Vec2d(0, 1),
-          status: Status.GameOver,
+          status: Status.gameOver,
         ),
       ],
     );

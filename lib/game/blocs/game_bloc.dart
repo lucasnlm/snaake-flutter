@@ -4,15 +4,18 @@ import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:snaake/game/blocs/game_events.dart';
-import 'package:snaake/game/blocs/game_state.dart';
-import 'package:snaake/game/flame/flame_manager.dart';
-import 'package:snaake/game/models/food.dart';
-import 'package:snaake/game/models/snake.dart';
-import 'package:snaake/game/models/status.dart';
-import 'package:snaake/game/models/vec2d.dart';
 
+import '../flame/flame_manager.dart';
+import '../models/food.dart';
+import '../models/snake.dart';
+import '../models/status.dart';
+import '../models/vec2d.dart';
+import 'game_events.dart';
+import 'game_state.dart';
+
+/// Game logic controller.
 class GameBloc extends Bloc<GameEvent, GameState> {
+  /// Convenient constructor.
   GameBloc({
     @required this.random,
     this.flameManager,
@@ -20,27 +23,30 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     add(LoadAssetsEvent());
   }
 
+  /// Flame wrapper.
   final IFlameManager flameManager;
+
+  /// Random generator. Used to create a random food position.
   final Random random;
 
   @override
   GameState get initialState {
     return GameState(
-      status: Status.Loading,
+      status: Status.loading,
       score: 0,
       velocity: Vec2d(0, -1),
     );
   }
 
-  Future<void> preloadAssets() async {
-    flameManager?.setup();
+  Future<void> _preloadAssets() async {
+    await flameManager?.setup();
   }
 
   void _startGame() {
     Timer.periodic(
       const Duration(milliseconds: 300),
       (timer) {
-        if (state.status == Status.Running) {
+        if (state.status == Status.running) {
           add(UpdateGame());
         }
       },
@@ -62,19 +68,19 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   }
 
   GameState _updateGame() {
-    Snake newSnake =
+    var newSnake =
         (state.snake == null) ? _newSnake() : state.snake.move(state.velocity);
-    int score = 0;
-    Food food = state.food;
-    Status status = state.status;
+    var score = 0;
+    var food = state.food;
+    var status = state.status;
 
     // Check if the snake hit the wall
     if (newSnake.head.x >= state.board.width || newSnake.head.x < 0) {
       newSnake = state.snake;
-      status = Status.GameOver;
+      status = Status.gameOver;
     } else if (newSnake.head.y >= state.board.height || newSnake.head.y < 0) {
       newSnake = state.snake;
-      status = Status.GameOver;
+      status = Status.gameOver;
     } else {
       if (newSnake.canEat(food)) {
         score += food.score;
@@ -131,8 +137,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         }
         break;
       case LoadAssetsEvent:
-        await preloadAssets();
-        yield state.copyWith(status: Status.Running);
+        await _preloadAssets();
+        yield state.copyWith(status: Status.running);
         _startGame();
         break;
       case OnBoardCreatedEvent:

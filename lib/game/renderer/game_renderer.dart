@@ -2,14 +2,18 @@ import 'dart:ui';
 
 import 'package:flame/game.dart';
 import 'package:flutter/widgets.dart';
-import 'package:snaake/game/models/board.dart';
-import 'package:snaake/game/models/food.dart';
-import 'package:snaake/game/models/snake.dart';
-import 'package:snaake/game/renderer/snake_renderer.dart';
 
+import '../models/board.dart';
+import '../models/food.dart';
+import '../models/snake.dart';
+import '../renderer/snake_renderer.dart';
 import 'food_renderer.dart';
 
+/// Main game render. Used to render the game screeen.
 class GameRenderer extends Game {
+  /// Convenient construcotr.
+  /// It requires the [screen] real dimention, the [board] size,
+  /// and the [tileSize] used to render the food and snake.
   GameRenderer({
     @required this.screen,
     @required this.board,
@@ -19,17 +23,24 @@ class GameRenderer extends Game {
     _snakeRenderer = SnakeRenderer(tileSize);
   }
 
+  /// The real screen size.
   final Rect screen;
-  final double tileSize;
+
+  /// The boar size.
   final Board board;
+
+  /// The tile size used to render the food and snake.
+  final double tileSize;
 
   FoodRenderer _foodSprite;
   SnakeRenderer _snakeRenderer;
 
+  /// Called to update the [Food] position.
   void updateFood(Food food) {
     _foodSprite.updateFood(food);
   }
 
+  /// Called to update the [Snake] positions.
   void updateSnake(Snake snake) {
     _snakeRenderer.updateSnake(snake);
   }
