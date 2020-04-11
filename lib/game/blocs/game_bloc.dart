@@ -65,21 +65,31 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     Snake newSnake =
         (state.snake == null) ? _newSnake() : state.snake.move(state.velocity);
     int score = 0;
-
     Food food = state.food;
+    Status status = state.status;
 
-    if (newSnake.canEat(food)) {
-      score += food.score;
-      newSnake = newSnake.eat(food);
-      food = null;
+    // Check if the snake hit the wall
+    if (newSnake.head.x >= state.board.width || newSnake.head.x < 0) {
+      newSnake = state.snake;
+      status = Status.GameOver;
+    } else if (newSnake.head.y >= state.board.height || newSnake.head.y < 0) {
+      newSnake = state.snake;
+      status = Status.GameOver;
+    } else {
+      if (newSnake.canEat(food)) {
+        score += food.score;
+        newSnake = newSnake.eat(food);
+        food = null;
+      }
+
+      food = (food == null) ? _getRandomFood() : food;
     }
-
-    final newFood = (food == null) ? _getRandomFood() : food;
 
     return state.copyWith(
       snake: newSnake,
       score: score,
-      food: newFood,
+      food: food,
+      status: status,
     );
   }
 
