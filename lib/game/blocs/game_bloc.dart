@@ -96,6 +96,12 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       newDirection = Vec2d(0, 1);
     }
 
+    // Block opposite directions
+    if (newDirection != null && (state.velocity.x + newDirection.x == 0) ||
+        (state.velocity.y + newDirection.y == 0)) {
+      newDirection = null;
+    }
+
     return newDirection;
   }
 
