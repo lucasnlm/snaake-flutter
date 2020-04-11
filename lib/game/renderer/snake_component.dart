@@ -70,27 +70,23 @@ class SnakeComponent extends Component {
   void updateSnake(Snake snake) {
     if (snake != null) {
       final snakeBody = snake.body.toList();
+
       _snakeBody = <BoardComponent>[
         _buildHead(
           snakeBody[0],
           snakeBody[1],
         ),
-      ];
-
-      for (var i = 1; i <= snakeBody.length - 2; i++) {
-        _snakeBody.add(
+        for (var i = 1; i <= snakeBody.length - 2; i++)
           _buildBody(
             snakeBody[i],
             snakeBody[i - 1],
             snakeBody[i + 1],
           ),
-        );
-      }
-
-      _snakeBody.add(_buildTail(
-        snakeBody.last,
-        snakeBody[snakeBody.length - 2],
-      ));
+        _buildTail(
+          snakeBody.last,
+          snakeBody[snakeBody.length - 2],
+        )
+      ];
     } else {
       _snakeBody = null;
     }
@@ -99,11 +95,11 @@ class SnakeComponent extends Component {
   @override
   void render(Canvas canvas) {
     if (_snakeBody != null) {
-      for (var part in _snakeBody.skip(1)) {
+      for (var part in _snakeBody) {
         part.render(canvas);
       }
 
-      _snakeBody.first.render(canvas);
+      //_snakeBody.first.render(canvas);
     }
   }
 
