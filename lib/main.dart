@@ -17,6 +17,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        brightness: Brightness.dark,
         primaryColor: GameColors.primary,
         primaryColorDark: GameColors.primaryDark,
       ),

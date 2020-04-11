@@ -22,6 +22,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/food/food.png
-    - assets/images/food/red_food.png
+    - assets/images/food/
+    - assets/images/snake/
 
