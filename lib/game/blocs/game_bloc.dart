@@ -2,12 +2,11 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:bloc/bloc.dart';
-import 'package:flame/flame.dart';
-import 'package:flame/util.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:snaake/game/blocs/game_events.dart';
 import 'package:snaake/game/blocs/game_state.dart';
+import 'package:snaake/game/flame/flame_manager.dart';
 import 'package:snaake/game/models/food.dart';
 import 'package:snaake/game/models/snake.dart';
 import 'package:snaake/game/models/vec2d.dart';
@@ -15,10 +14,12 @@ import 'package:snaake/game/models/vec2d.dart';
 class GameBloc extends Bloc<GameEvent, GameState> {
   GameBloc({
     @required this.random,
+    this.flameManager,
   }) : assert(random != null) {
     add(LoadAssetsEvent());
   }
 
+  final IFlameManager flameManager;
   final Random random;
 
   @override
@@ -31,14 +32,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   }
 
   Future<void> preloadAssets() async {
-    final flameUtil = Util();
-    await flameUtil.fullScreen();
-    await flameUtil.setOrientation(DeviceOrientation.portraitUp);
-
-    Flame.images.loadAll(<String>[
-      'food/food.png',
-      'food/red_food.png',
-    ]);
+    flameManager?.setup();
   }
 
   void _startGame() {
@@ -90,7 +84,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
   Vec2d _handleDirection(OnKeyPressedEvent event) {
     final pressedKey = event.key.keyId;
-    Vec2d newDirection = state.velocity;
+    Vec2d newDirection;
 
     if (pressedKey == LogicalKeyboardKey.arrowRight.keyId) {
       newDirection = Vec2d(1, 0);
