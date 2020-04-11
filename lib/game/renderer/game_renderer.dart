@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flame/game.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../ui/colors.dart';
 import '../models/board.dart';
 import '../models/food.dart';
 import '../models/snake.dart';
@@ -48,18 +49,43 @@ class GameRenderer extends Game {
   @override
   void render(Canvas canvas) {
     canvas.translate(screen.left, screen.top);
+    canvas.save();
 
     _drawBackground(canvas);
 
     _foodSprite.render(canvas);
     _snakeRenderer.render(canvas);
+
+    canvas.restore();
   }
 
   void _drawBackground(Canvas canvas) {
     final fullBackground = Rect.fromLTWH(0, 0, screen.width, screen.height);
     final paint = Paint();
-    paint.color = const Color(0xFFFFFFFF);
+    paint.color = GameColors.voidBackground;
     canvas.drawRect(fullBackground, paint);
+
+    final boardBackground =
+        Rect.fromLTWH(0, 0, board.width * tileSize, board.height * tileSize);
+    paint.color = GameColors.background;
+    canvas.drawRect(boardBackground, paint);
+
+    paint.color = GameColors.backgroundChess;
+    for (var i = 0; i < board.width; i++) {
+      for (var j = 0; j < board.height; j++) {
+        if ((j * board.width + i) % 2 == (j % 2)) {
+          canvas.drawRect(
+            Rect.fromLTWH(
+              tileSize * i,
+              tileSize * j,
+              tileSize,
+              tileSize,
+            ),
+            paint,
+          );
+        }
+      }
+    }
   }
 
   @override

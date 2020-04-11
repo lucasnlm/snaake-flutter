@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import './game/blocs/game_bloc.dart';
 import './game/flame/flame_manager.dart';
 import './game/screens/game_screen.dart';
+import './ui/colors.dart';
 
 void main() => runApp(MainApp());
 
@@ -16,7 +17,8 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: GameColors.primary,
+        primaryColorDark: GameColors.primaryDark,
       ),
       home: BlocProvider(
         create: (context) => GameBloc(
