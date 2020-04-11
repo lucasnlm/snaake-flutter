@@ -14,8 +14,8 @@ class GameColors {
   static const voidBackground = Color(0xFF000000);
 
   /// The background of the playable area.
-  static const background = Color(0xFFC6C6C6);
+  static const background = Color(0xFFB0B0B0);
 
   /// The color used to draw the chess background.
-  static const backgroundChess = Color(0xFFC0C0C0);
+  static const backgroundChess = Color(0xFFB3B3B3);
 }
