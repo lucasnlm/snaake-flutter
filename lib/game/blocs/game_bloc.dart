@@ -19,7 +19,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   GameBloc({
     @required this.random,
     this.flameManager,
-    this.snakeInitialLength = 9,
+    this.snakeInitialLength = 4,
+    this.updatePeriod = 200,
   })  : assert(random != null),
         assert(snakeInitialLength >= 4) {
     add(LoadAssetsEvent());
@@ -33,6 +34,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
   /// The snake initial length. Default value is 4.
   final int snakeInitialLength;
+
+  /// The game update period in miliseconds.
+  final int updatePeriod;
 
   @override
   GameState get initialState {
@@ -49,7 +53,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
   void _startGame() {
     Timer.periodic(
-      const Duration(milliseconds: 300),
+      Duration(
+        milliseconds: updatePeriod,
+      ),
       (timer) {
         if (state.status == Status.running) {
           add(UpdateGame());
