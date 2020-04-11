@@ -11,7 +11,7 @@ class GameColors {
   static const primaryDark = Color(0xFF1A2629);
 
   /// The color of the unplayable area.
-  static const voidBackground = Color(0xFFFF0000);
+  static const voidBackground = Color(0xFF1A2629);
 
   /// The background of the playable area.
   static const background = Color(0xFFB0B0B0);
