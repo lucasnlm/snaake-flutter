@@ -5,6 +5,7 @@ import 'package:snaake/game/blocs/game_bloc.dart';
 import 'package:snaake/game/blocs/game_events.dart';
 import 'package:snaake/game/blocs/game_state.dart';
 import 'package:snaake/game/models/board.dart';
+import 'package:snaake/game/models/status.dart';
 import 'package:snaake/game/renderer/game_renderer.dart';
 import 'package:snaake/game/widgetss/loading.dart';
 
@@ -72,9 +73,11 @@ class GameScreen extends StatelessWidget {
             _gameRenderer.updateSnake(state.snake);
           },
           child: BlocBuilder<GameBloc, GameState>(
-            condition: (before, after) => before.isLoaded != after.isLoaded,
+            condition: (before, after) => before.status != Status.Loading,
             builder: (context, state) {
-              return state.isLoaded ? _gameRenderer.widget : Loading();
+              return state.status == Status.Loading
+                  ? Loading()
+                  : _gameRenderer.widget;
             },
           ),
         ),

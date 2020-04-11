@@ -9,6 +9,7 @@ import 'package:snaake/game/blocs/game_state.dart';
 import 'package:snaake/game/flame/flame_manager.dart';
 import 'package:snaake/game/models/food.dart';
 import 'package:snaake/game/models/snake.dart';
+import 'package:snaake/game/models/status.dart';
 import 'package:snaake/game/models/vec2d.dart';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
@@ -25,7 +26,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   @override
   GameState get initialState {
     return GameState(
-      isLoaded: false,
+      status: Status.Loading,
       score: 0,
       velocity: Vec2d(0, -1),
     );
@@ -39,7 +40,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     Timer.periodic(
       const Duration(milliseconds: 300),
       (timer) {
-        if (state.isLoaded) {
+        if (state.status == Status.Running) {
           add(UpdateGame());
         }
       },
@@ -121,7 +122,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         break;
       case LoadAssetsEvent:
         await preloadAssets();
-        yield state.copyWith(isLoaded: true);
+        yield state.copyWith(status: Status.Running);
         _startGame();
         break;
       case OnBoardCreatedEvent:

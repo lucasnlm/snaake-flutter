@@ -3,19 +3,20 @@ import 'package:flutter/widgets.dart';
 import 'package:snaake/game/models/board.dart';
 import 'package:snaake/game/models/food.dart';
 import 'package:snaake/game/models/snake.dart';
+import 'package:snaake/game/models/status.dart';
 import 'package:snaake/game/models/vec2d.dart';
 
 class GameState extends Equatable {
   GameState({
     @required this.velocity,
-    this.isLoaded = false,
+    this.status = Status.Loading,
     this.score = 0,
     this.food,
     this.snake,
     this.board,
   }) : assert(score >= 0);
 
-  final bool isLoaded;
+  final Status status;
   final int score;
   final Food food;
   final Snake snake;
@@ -24,7 +25,7 @@ class GameState extends Equatable {
 
   @override
   List<Object> get props => [
-        isLoaded,
+        status,
         score,
         food,
         snake,
@@ -36,7 +37,7 @@ class GameState extends Equatable {
   bool get stringify => true;
 
   GameState copyWith({
-    bool isLoaded,
+    Status status,
     int score,
     Food food,
     Snake snake,
@@ -44,7 +45,7 @@ class GameState extends Equatable {
     Board board,
   }) {
     return GameState(
-      isLoaded: isLoaded ?? this.isLoaded,
+      status: status ?? this.status,
       score: score ?? this.score,
       food: food ?? this.food,
       snake: snake ?? this.snake,
