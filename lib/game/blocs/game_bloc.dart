@@ -19,7 +19,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   GameBloc({
     @required this.random,
     this.flameManager,
-    this.snakeInitialLength = 4,
+    this.snakeInitialLength = 14,
     this.updatePeriod = 200,
   })  : assert(random != null),
         assert(snakeInitialLength >= 4) {
@@ -79,8 +79,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   }
 
   GameState _updateGame() {
-    var newSnake =
-        (state.snake == null) ? _newSnake() : state.snake.move(state.velocity);
+    final oldSnake = state.snake;
+    var newSnake = oldSnake?.move(state.velocity) ?? _newSnake();
     var score = 0;
     var food = state.food;
     var status = state.status;
@@ -88,10 +88,10 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     // Check if the snake hit the wall
     if ((newSnake.head.x >= state.board.width || newSnake.head.x < 0) ||
         (newSnake.head.y >= state.board.height || newSnake.head.y < 0)) {
-      newSnake = state.snake;
+      newSnake = oldSnake;
       status = Status.gameOver;
-    } else if (newSnake.hasBitenItself()) {
-      newSnake = state.snake;
+    } else if (oldSnake?.hasBitenItself() ?? false) {
+      newSnake = oldSnake;
       status = Status.gameOver;
     } else {
       if (newSnake.canEat(food)) {
@@ -100,7 +100,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         food = null;
       }
 
-      food = (food == null) ? _getRandomFood() : food;
+      food ??= _getRandomFood();
     }
 
     return state.copyWith(

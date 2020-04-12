@@ -70,7 +70,9 @@ class SnakeComponent extends Component {
   /// Update the snake position using [snake] info.
   void updateSnake(Snake snake) {
     if (snake != null) {
-      final snakeBody = LinkedHashSet.from(snake.body).toList();
+      final snakeBody = snake.hasBitenItself()
+          ? snake.body.toList()
+          : LinkedHashSet.from(snake.body).toList();
 
       _snakeBody = <BoardComponent>[
         _buildHead(
@@ -96,9 +98,11 @@ class SnakeComponent extends Component {
   @override
   void render(Canvas canvas) {
     if (_snakeBody != null) {
-      for (var part in _snakeBody) {
+      for (var part in _snakeBody.skip(1)) {
         part.render(canvas);
       }
+
+      _snakeBody.first.render(canvas);
     }
   }
 
