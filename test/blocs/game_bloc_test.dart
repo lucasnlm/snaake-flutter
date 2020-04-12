@@ -1,47 +1,59 @@
-import 'dart:collection';
 import 'dart:math';
 
 import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:snaake/game/blocs/game_bloc.dart';
 import 'package:snaake/game/blocs/game_events.dart';
-import 'package:snaake/game/blocs/game_state.dart';
 import 'package:snaake/game/models/board.dart';
 import 'package:snaake/game/models/food.dart';
-import 'package:snaake/game/models/snake.dart';
 import 'package:snaake/game/models/status.dart';
 import 'package:snaake/game/models/vec2d.dart';
 
-GameState _stateY(int y, {Food food, int score}) {
-  return GameState(
-    status: Status.running,
-    score: score ?? 0,
-    food: food ?? Food(x: 2, y: 16, score: 1),
-    snake: Snake.fromPosition(5, y, 4),
-    velocity: Vec2d(0, -1),
-    board: Board(10, 20),
-  );
+class _IsPosition extends Matcher {
+  const _IsPosition(this.x, this.y);
+
+  final int x;
+  final int y;
+
+  @override
+  bool matches(dynamic item, Map matchState) =>
+      item.snake.head.x == x && item.snake.head.y == y;
+
+  @override
+  Description describe(Description description) => description.add('$x, $y');
+}
+
+class _Snake extends Matcher {
+  const _Snake(
+    this.snake, {
+    this.food,
+    this.score,
+    this.status,
+  });
+
+  final List<Vec2d> snake;
+  final Food food;
+  final int score;
+  final Status status;
+
+  @override
+  bool matches(dynamic item, Map matchState) {
+    print("${item.snake.body.toList().toString()}");
+    return listEquals(item.snake.body.toList(), snake) &&
+        (food == null || item.food == food) &&
+        (score == null || item.score == score) &&
+        (status == null || item.status == status);
+  }
+
+  @override
+  Description describe(Description description) =>
+      description.add("${snake.toString()}, $food");
 }
 
 void main() {
   group('test snake movement', () {
-    GameState _state(
-      List<Vec2d> snake, {
-      Food food,
-      int score,
-      Vec2d velocity,
-    }) {
-      return GameState(
-        status: Status.running,
-        score: score ?? 0,
-        food: food ?? Food(x: 2, y: 16, score: 1),
-        snake: Snake(Queue.from(snake)),
-        velocity: velocity ?? Vec2d(0, -1),
-        board: Board(10, 20),
-      );
-    }
-
     blocTest(
       'with no input',
       build: () async => GameBloc(random: Random(200)),
@@ -51,7 +63,7 @@ void main() {
         bloc.add(OnBoardCreatedEvent(Board(10, 20)));
         List.generate(11, (index) => bloc.add(UpdateGame()));
       },
-      expect: List.generate(11, (index) => _stateY(10 - index)),
+      expect: List.generate(11, (index) => _IsPosition(5, 10 - index)),
     );
 
     blocTest(
@@ -78,132 +90,90 @@ void main() {
           ..add(UpdateGame());
       },
       expect: [
-        _state(
-          <Vec2d>[
-            Vec2d(5, 10),
-            Vec2d(5, 11),
-            Vec2d(5, 12),
-            Vec2d(5, 13),
-          ],
-          velocity: Vec2d(0, -1),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(5, 9),
-            Vec2d(5, 10),
-            Vec2d(5, 11),
-            Vec2d(5, 12),
-          ],
-          velocity: Vec2d(0, -1),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(5, 9),
-            Vec2d(5, 10),
-            Vec2d(5, 11),
-            Vec2d(5, 12),
-          ],
-          velocity: Vec2d(-1, 0),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(4, 9),
-            Vec2d(5, 9),
-            Vec2d(5, 10),
-            Vec2d(5, 11),
-          ],
-          velocity: Vec2d(-1, 0),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(3, 9),
-            Vec2d(4, 9),
-            Vec2d(5, 9),
-            Vec2d(5, 10),
-          ],
-          velocity: Vec2d(-1, 0),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(3, 9),
-            Vec2d(4, 9),
-            Vec2d(5, 9),
-            Vec2d(5, 10),
-          ],
-          velocity: Vec2d(0, -1),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(3, 8),
-            Vec2d(3, 9),
-            Vec2d(4, 9),
-            Vec2d(5, 9),
-          ],
-          velocity: Vec2d(0, -1),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(3, 7),
-            Vec2d(3, 8),
-            Vec2d(3, 9),
-            Vec2d(4, 9),
-          ],
-          velocity: Vec2d(0, -1),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(3, 7),
-            Vec2d(3, 8),
-            Vec2d(3, 9),
-            Vec2d(4, 9),
-          ],
-          velocity: Vec2d(1, 0),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(4, 7),
-            Vec2d(3, 7),
-            Vec2d(3, 8),
-            Vec2d(3, 9),
-          ],
-          velocity: Vec2d(1, 0),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(5, 7),
-            Vec2d(4, 7),
-            Vec2d(3, 7),
-            Vec2d(3, 8),
-          ],
-          velocity: Vec2d(1, 0),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(5, 7),
-            Vec2d(4, 7),
-            Vec2d(3, 7),
-            Vec2d(3, 8),
-          ],
-          velocity: Vec2d(0, 1),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(5, 8),
-            Vec2d(5, 7),
-            Vec2d(4, 7),
-            Vec2d(3, 7),
-          ],
-          velocity: Vec2d(0, 1),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(5, 9),
-            Vec2d(5, 8),
-            Vec2d(5, 7),
-            Vec2d(4, 7),
-          ],
-          velocity: Vec2d(0, 1),
-        )
+        _Snake([
+          Vec2d(5, 10),
+          Vec2d(5, 11),
+          Vec2d(5, 12),
+          Vec2d(5, 13),
+        ]),
+        _Snake([
+          Vec2d(5, 9),
+          Vec2d(5, 10),
+          Vec2d(5, 11),
+          Vec2d(5, 12),
+        ]),
+        _Snake([
+          Vec2d(5, 9),
+          Vec2d(5, 10),
+          Vec2d(5, 11),
+          Vec2d(5, 12),
+        ]),
+        _Snake([
+          Vec2d(4, 9),
+          Vec2d(5, 9),
+          Vec2d(5, 10),
+          Vec2d(5, 11),
+        ]),
+        _Snake([
+          Vec2d(3, 9),
+          Vec2d(4, 9),
+          Vec2d(5, 9),
+          Vec2d(5, 10),
+        ]),
+        _Snake([
+          Vec2d(3, 9),
+          Vec2d(4, 9),
+          Vec2d(5, 9),
+          Vec2d(5, 10),
+        ]),
+        _Snake([
+          Vec2d(3, 8),
+          Vec2d(3, 9),
+          Vec2d(4, 9),
+          Vec2d(5, 9),
+        ]),
+        _Snake([
+          Vec2d(3, 7),
+          Vec2d(3, 8),
+          Vec2d(3, 9),
+          Vec2d(4, 9),
+        ]),
+        _Snake([
+          Vec2d(3, 7),
+          Vec2d(3, 8),
+          Vec2d(3, 9),
+          Vec2d(4, 9),
+        ]),
+        _Snake(<Vec2d>[
+          Vec2d(4, 7),
+          Vec2d(3, 7),
+          Vec2d(3, 8),
+          Vec2d(3, 9),
+        ]),
+        _Snake([
+          Vec2d(5, 7),
+          Vec2d(4, 7),
+          Vec2d(3, 7),
+          Vec2d(3, 8),
+        ]),
+        _Snake([
+          Vec2d(5, 7),
+          Vec2d(4, 7),
+          Vec2d(3, 7),
+          Vec2d(3, 8),
+        ]),
+        _Snake([
+          Vec2d(5, 8),
+          Vec2d(5, 7),
+          Vec2d(4, 7),
+          Vec2d(3, 7),
+        ]),
+        _Snake([
+          Vec2d(5, 9),
+          Vec2d(5, 8),
+          Vec2d(5, 7),
+          Vec2d(4, 7),
+        ])
       ],
     );
 
@@ -235,132 +205,90 @@ void main() {
           ..add(UpdateGame());
       },
       expect: [
-        _state(
-          <Vec2d>[
-            Vec2d(5, 10),
-            Vec2d(5, 11),
-            Vec2d(5, 12),
-            Vec2d(5, 13),
-          ],
-          velocity: Vec2d(0, -1),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(5, 9),
-            Vec2d(5, 10),
-            Vec2d(5, 11),
-            Vec2d(5, 12),
-          ],
-          velocity: Vec2d(0, -1),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(5, 9),
-            Vec2d(5, 10),
-            Vec2d(5, 11),
-            Vec2d(5, 12),
-          ],
-          velocity: Vec2d(-1, 0),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(4, 9),
-            Vec2d(5, 9),
-            Vec2d(5, 10),
-            Vec2d(5, 11),
-          ],
-          velocity: Vec2d(-1, 0),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(3, 9),
-            Vec2d(4, 9),
-            Vec2d(5, 9),
-            Vec2d(5, 10),
-          ],
-          velocity: Vec2d(-1, 0),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(3, 9),
-            Vec2d(4, 9),
-            Vec2d(5, 9),
-            Vec2d(5, 10),
-          ],
-          velocity: Vec2d(0, -1),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(3, 8),
-            Vec2d(3, 9),
-            Vec2d(4, 9),
-            Vec2d(5, 9),
-          ],
-          velocity: Vec2d(0, -1),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(3, 7),
-            Vec2d(3, 8),
-            Vec2d(3, 9),
-            Vec2d(4, 9),
-          ],
-          velocity: Vec2d(0, -1),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(3, 7),
-            Vec2d(3, 8),
-            Vec2d(3, 9),
-            Vec2d(4, 9),
-          ],
-          velocity: Vec2d(1, 0),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(4, 7),
-            Vec2d(3, 7),
-            Vec2d(3, 8),
-            Vec2d(3, 9),
-          ],
-          velocity: Vec2d(1, 0),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(5, 7),
-            Vec2d(4, 7),
-            Vec2d(3, 7),
-            Vec2d(3, 8),
-          ],
-          velocity: Vec2d(1, 0),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(5, 7),
-            Vec2d(4, 7),
-            Vec2d(3, 7),
-            Vec2d(3, 8),
-          ],
-          velocity: Vec2d(0, 1),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(5, 8),
-            Vec2d(5, 7),
-            Vec2d(4, 7),
-            Vec2d(3, 7),
-          ],
-          velocity: Vec2d(0, 1),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(5, 9),
-            Vec2d(5, 8),
-            Vec2d(5, 7),
-            Vec2d(4, 7),
-          ],
-          velocity: Vec2d(0, 1),
-        )
+        _Snake([
+          Vec2d(5, 10),
+          Vec2d(5, 11),
+          Vec2d(5, 12),
+          Vec2d(5, 13),
+        ]),
+        _Snake([
+          Vec2d(5, 9),
+          Vec2d(5, 10),
+          Vec2d(5, 11),
+          Vec2d(5, 12),
+        ]),
+        _Snake([
+          Vec2d(5, 9),
+          Vec2d(5, 10),
+          Vec2d(5, 11),
+          Vec2d(5, 12),
+        ]),
+        _Snake([
+          Vec2d(4, 9),
+          Vec2d(5, 9),
+          Vec2d(5, 10),
+          Vec2d(5, 11),
+        ]),
+        _Snake([
+          Vec2d(3, 9),
+          Vec2d(4, 9),
+          Vec2d(5, 9),
+          Vec2d(5, 10),
+        ]),
+        _Snake([
+          Vec2d(3, 9),
+          Vec2d(4, 9),
+          Vec2d(5, 9),
+          Vec2d(5, 10),
+        ]),
+        _Snake([
+          Vec2d(3, 8),
+          Vec2d(3, 9),
+          Vec2d(4, 9),
+          Vec2d(5, 9),
+        ]),
+        _Snake([
+          Vec2d(3, 7),
+          Vec2d(3, 8),
+          Vec2d(3, 9),
+          Vec2d(4, 9),
+        ]),
+        _Snake([
+          Vec2d(3, 7),
+          Vec2d(3, 8),
+          Vec2d(3, 9),
+          Vec2d(4, 9),
+        ]),
+        _Snake([
+          Vec2d(4, 7),
+          Vec2d(3, 7),
+          Vec2d(3, 8),
+          Vec2d(3, 9),
+        ]),
+        _Snake([
+          Vec2d(5, 7),
+          Vec2d(4, 7),
+          Vec2d(3, 7),
+          Vec2d(3, 8),
+        ]),
+        _Snake([
+          Vec2d(5, 7),
+          Vec2d(4, 7),
+          Vec2d(3, 7),
+          Vec2d(3, 8),
+        ]),
+        _Snake([
+          Vec2d(5, 8),
+          Vec2d(5, 7),
+          Vec2d(4, 7),
+          Vec2d(3, 7),
+        ]),
+        _Snake([
+          Vec2d(5, 9),
+          Vec2d(5, 8),
+          Vec2d(5, 7),
+          Vec2d(4, 7),
+        ])
       ],
     );
 
@@ -377,46 +305,23 @@ void main() {
       },
       expect: [
         // Eat
-        _stateY(10, food: Food(x: 5, y: 9, score: 1)),
+        _Snake(
+          [Vec2d(5, 10), Vec2d(5, 11), Vec2d(5, 12), Vec2d(5, 13)],
+          food: Food(x: 5, y: 9, score: 1),
+          score: 0,
+        ),
 
         // New score and food position
-        _state(
-          <Vec2d>[
-            Vec2d(5, 9),
-            Vec2d(5, 10),
-            Vec2d(5, 11),
-            Vec2d(5, 12),
-            Vec2d(5, 13),
-          ],
+        _Snake(
+          [Vec2d(5, 9), Vec2d(5, 9), Vec2d(5, 10), Vec2d(5, 11), Vec2d(5, 12)],
+          food: Food(x: 4, y: 19, score: 1),
           score: 1,
-          food: Food(
-            x: 4,
-            y: 19,
-            score: 1,
-          ),
         ),
       ],
     );
   });
 
   group('check collision with the wall', () {
-    GameState _state(
-      List<Vec2d> snake, {
-      Food food,
-      int score,
-      Vec2d velocity,
-      Status status,
-    }) {
-      return GameState(
-        status: status ?? Status.running,
-        score: score ?? 0,
-        food: food ?? Food(x: 3, y: 0, score: 1),
-        snake: Snake(Queue.from(snake)),
-        velocity: velocity ?? Vec2d(0, -1),
-        board: Board(5, 5),
-      );
-    }
-
     blocTest(
       'on top',
       build: () async => GameBloc(random: Random(100)),
@@ -432,26 +337,26 @@ void main() {
           ..add(UpdateGame());
       },
       expect: [
-        _state(<Vec2d>[
+        _Snake([
           Vec2d(2, 2),
           Vec2d(2, 3),
           Vec2d(2, 4),
           Vec2d(2, 5),
         ]),
-        _state(<Vec2d>[
+        _Snake([
           Vec2d(2, 1),
           Vec2d(2, 2),
           Vec2d(2, 3),
           Vec2d(2, 4),
         ]),
-        _state(<Vec2d>[
+        _Snake([
           Vec2d(2, 0),
           Vec2d(2, 1),
           Vec2d(2, 2),
           Vec2d(2, 3),
         ]),
-        _state(
-          <Vec2d>[
+        _Snake(
+          [
             Vec2d(2, 0),
             Vec2d(2, 1),
             Vec2d(2, 2),
@@ -478,47 +383,37 @@ void main() {
           ..add(UpdateGame());
       },
       expect: [
-        _state(<Vec2d>[
+        _Snake([
           Vec2d(2, 2),
           Vec2d(2, 3),
           Vec2d(2, 4),
           Vec2d(2, 5),
         ]),
-        _state(
-          <Vec2d>[
-            Vec2d(2, 2),
-            Vec2d(2, 3),
-            Vec2d(2, 4),
-            Vec2d(2, 5),
-          ],
-          velocity: Vec2d(-1, 0),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(1, 2),
-            Vec2d(2, 2),
-            Vec2d(2, 3),
-            Vec2d(2, 4),
-          ],
-          velocity: Vec2d(-1, 0),
-        ),
-        _state(
-          <Vec2d>[
+        _Snake([
+          Vec2d(2, 2),
+          Vec2d(2, 3),
+          Vec2d(2, 4),
+          Vec2d(2, 5),
+        ]),
+        _Snake([
+          Vec2d(1, 2),
+          Vec2d(2, 2),
+          Vec2d(2, 3),
+          Vec2d(2, 4),
+        ]),
+        _Snake([
+          Vec2d(0, 2),
+          Vec2d(1, 2),
+          Vec2d(2, 2),
+          Vec2d(2, 3),
+        ]),
+        _Snake(
+          [
             Vec2d(0, 2),
             Vec2d(1, 2),
             Vec2d(2, 2),
             Vec2d(2, 3),
           ],
-          velocity: Vec2d(-1, 0),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(0, 2),
-            Vec2d(1, 2),
-            Vec2d(2, 2),
-            Vec2d(2, 3),
-          ],
-          velocity: Vec2d(-1, 0),
           status: Status.gameOver,
         ),
       ],
@@ -540,47 +435,37 @@ void main() {
           ..add(UpdateGame());
       },
       expect: [
-        _state(<Vec2d>[
+        _Snake([
           Vec2d(2, 2),
           Vec2d(2, 3),
           Vec2d(2, 4),
           Vec2d(2, 5),
         ]),
-        _state(
-          <Vec2d>[
-            Vec2d(2, 2),
-            Vec2d(2, 3),
-            Vec2d(2, 4),
-            Vec2d(2, 5),
-          ],
-          velocity: Vec2d(1, 0),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(3, 2),
-            Vec2d(2, 2),
-            Vec2d(2, 3),
-            Vec2d(2, 4),
-          ],
-          velocity: Vec2d(1, 0),
-        ),
-        _state(
-          <Vec2d>[
+        _Snake([
+          Vec2d(2, 2),
+          Vec2d(2, 3),
+          Vec2d(2, 4),
+          Vec2d(2, 5),
+        ]),
+        _Snake([
+          Vec2d(3, 2),
+          Vec2d(2, 2),
+          Vec2d(2, 3),
+          Vec2d(2, 4),
+        ]),
+        _Snake([
+          Vec2d(4, 2),
+          Vec2d(3, 2),
+          Vec2d(2, 2),
+          Vec2d(2, 3),
+        ]),
+        _Snake(
+          [
             Vec2d(4, 2),
             Vec2d(3, 2),
             Vec2d(2, 2),
             Vec2d(2, 3),
           ],
-          velocity: Vec2d(1, 0),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(4, 2),
-            Vec2d(3, 2),
-            Vec2d(2, 2),
-            Vec2d(2, 3),
-          ],
-          velocity: Vec2d(1, 0),
           status: Status.gameOver,
         ),
       ],
@@ -604,65 +489,49 @@ void main() {
           ..add(UpdateGame());
       },
       expect: [
-        _state(<Vec2d>[
+        _Snake([
           Vec2d(2, 2),
           Vec2d(2, 3),
           Vec2d(2, 4),
           Vec2d(2, 5),
         ]),
-        _state(
-          <Vec2d>[
-            Vec2d(2, 2),
-            Vec2d(2, 3),
-            Vec2d(2, 4),
-            Vec2d(2, 5),
-          ],
-          velocity: Vec2d(1, 0),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(3, 2),
-            Vec2d(2, 2),
-            Vec2d(2, 3),
-            Vec2d(2, 4),
-          ],
-          velocity: Vec2d(1, 0),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(3, 2),
-            Vec2d(2, 2),
-            Vec2d(2, 3),
-            Vec2d(2, 4),
-          ],
-          velocity: Vec2d(0, 1),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(3, 3),
-            Vec2d(3, 2),
-            Vec2d(2, 2),
-            Vec2d(2, 3),
-          ],
-          velocity: Vec2d(0, 1),
-        ),
-        _state(
-          <Vec2d>[
+        _Snake([
+          Vec2d(2, 2),
+          Vec2d(2, 3),
+          Vec2d(2, 4),
+          Vec2d(2, 5),
+        ]),
+        _Snake([
+          Vec2d(3, 2),
+          Vec2d(2, 2),
+          Vec2d(2, 3),
+          Vec2d(2, 4),
+        ]),
+        _Snake([
+          Vec2d(3, 2),
+          Vec2d(2, 2),
+          Vec2d(2, 3),
+          Vec2d(2, 4),
+        ]),
+        _Snake([
+          Vec2d(3, 3),
+          Vec2d(3, 2),
+          Vec2d(2, 2),
+          Vec2d(2, 3),
+        ]),
+        _Snake([
+          Vec2d(3, 4),
+          Vec2d(3, 3),
+          Vec2d(3, 2),
+          Vec2d(2, 2),
+        ]),
+        _Snake(
+          [
             Vec2d(3, 4),
             Vec2d(3, 3),
             Vec2d(3, 2),
             Vec2d(2, 2),
           ],
-          velocity: Vec2d(0, 1),
-        ),
-        _state(
-          <Vec2d>[
-            Vec2d(3, 4),
-            Vec2d(3, 3),
-            Vec2d(3, 2),
-            Vec2d(2, 2),
-          ],
-          velocity: Vec2d(0, 1),
           status: Status.gameOver,
         ),
       ],
@@ -670,23 +539,6 @@ void main() {
   });
 
   group('test snake biting itself', () {
-    GameState _state(
-      List<Vec2d> snake, {
-      Food food,
-      int score,
-      Vec2d velocity,
-      Status status,
-    }) {
-      return GameState(
-        status: status ?? Status.running,
-        score: score ?? 0,
-        food: food ?? Food(x: 2, y: 16, score: 1),
-        snake: Snake(Queue.from(snake)),
-        velocity: velocity ?? Vec2d(0, -1),
-        board: Board(10, 20),
-      );
-    }
-
     blocTest(
       'bite itself',
       build: () async => GameBloc(
@@ -707,7 +559,7 @@ void main() {
           ..add(UpdateGame());
       },
       expect: [
-        _state([
+        _Snake([
           Vec2d(5, 10),
           Vec2d(5, 11),
           Vec2d(5, 12),
@@ -715,51 +567,47 @@ void main() {
           Vec2d(5, 14),
           Vec2d(5, 15),
         ]),
-        _state(
-          [
-            Vec2d(5, 10),
-            Vec2d(5, 11),
-            Vec2d(5, 12),
-            Vec2d(5, 13),
-            Vec2d(5, 14),
-            Vec2d(5, 15),
-          ],
-          velocity: Vec2d(1, 0),
-        ),
-        _state(
-          [
-            Vec2d(6, 10),
-            Vec2d(5, 10),
-            Vec2d(5, 11),
-            Vec2d(5, 12),
-            Vec2d(5, 13),
-            Vec2d(5, 14),
-          ],
-          velocity: Vec2d(1, 0),
-        ),
-        _state(
-          [
-            Vec2d(6, 10),
-            Vec2d(5, 10),
-            Vec2d(5, 11),
-            Vec2d(5, 12),
-            Vec2d(5, 13),
-            Vec2d(5, 14),
-          ],
-          velocity: Vec2d(0, 1),
-        ),
-        _state(
-          [
-            Vec2d(6, 11),
-            Vec2d(6, 10),
-            Vec2d(5, 10),
-            Vec2d(5, 11),
-            Vec2d(5, 12),
-            Vec2d(5, 13),
-          ],
-          velocity: Vec2d(0, 1),
-        ),
-        _state(
+        _Snake([
+          Vec2d(5, 10),
+          Vec2d(5, 11),
+          Vec2d(5, 12),
+          Vec2d(5, 13),
+          Vec2d(5, 14),
+          Vec2d(5, 15),
+        ]),
+        _Snake([
+          Vec2d(6, 10),
+          Vec2d(5, 10),
+          Vec2d(5, 11),
+          Vec2d(5, 12),
+          Vec2d(5, 13),
+          Vec2d(5, 14),
+        ]),
+        _Snake([
+          Vec2d(6, 10),
+          Vec2d(5, 10),
+          Vec2d(5, 11),
+          Vec2d(5, 12),
+          Vec2d(5, 13),
+          Vec2d(5, 14),
+        ]),
+        _Snake([
+          Vec2d(6, 11),
+          Vec2d(6, 10),
+          Vec2d(5, 10),
+          Vec2d(5, 11),
+          Vec2d(5, 12),
+          Vec2d(5, 13),
+        ]),
+        _Snake([
+          Vec2d(6, 11),
+          Vec2d(6, 10),
+          Vec2d(5, 10),
+          Vec2d(5, 11),
+          Vec2d(5, 12),
+          Vec2d(5, 13),
+        ]),
+        _Snake(
           [
             Vec2d(6, 11),
             Vec2d(6, 10),
@@ -768,18 +616,6 @@ void main() {
             Vec2d(5, 12),
             Vec2d(5, 13),
           ],
-          velocity: Vec2d(-1, 0),
-        ),
-        _state(
-          [
-            Vec2d(6, 11),
-            Vec2d(6, 10),
-            Vec2d(5, 10),
-            Vec2d(5, 11),
-            Vec2d(5, 12),
-            Vec2d(5, 13),
-          ],
-          velocity: Vec2d(-1, 0),
           status: Status.gameOver,
         ),
       ],
