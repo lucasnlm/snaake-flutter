@@ -537,9 +537,9 @@ void main() {
     );
   });
 
-  group('test snake biting itself', () {
+  group('test snake biting', () {
     blocTest(
-      'bite itself',
+      'itself',
       build: () async => GameBloc(
         random: Random(200),
         snakeInitialLength: 6,
@@ -555,6 +555,7 @@ void main() {
           ..add(OnKeyPressedEvent(LogicalKeyboardKey.arrowDown))
           ..add(UpdateGame())
           ..add(OnKeyPressedEvent(LogicalKeyboardKey.arrowLeft))
+          ..add(UpdateGame())
           ..add(UpdateGame());
       },
       expect: [
@@ -608,12 +609,22 @@ void main() {
         ]),
         _IsState(
           [
+            Vec2d(5, 11),
             Vec2d(6, 11),
             Vec2d(6, 10),
             Vec2d(5, 10),
             Vec2d(5, 11),
             Vec2d(5, 12),
-            Vec2d(5, 13),
+          ],
+        ),
+        _IsState(
+          [
+            Vec2d(5, 11),
+            Vec2d(6, 11),
+            Vec2d(6, 10),
+            Vec2d(5, 10),
+            Vec2d(5, 11),
+            Vec2d(5, 12),
           ],
           status: Status.gameOver,
         ),
