@@ -49,6 +49,7 @@ class GameScreen extends StatelessWidget {
                 return IconButton(
                   icon: Icon(Icons.play_arrow),
                   tooltip: 'Continue',
+                  focusNode: null,
                   onPressed: () {
                     BlocProvider.of<GameBloc>(context).add(ResumeGameEvent());
                   },
@@ -57,6 +58,7 @@ class GameScreen extends StatelessWidget {
                 return IconButton(
                   icon: Icon(Icons.pause),
                   tooltip: 'Pause',
+                  focusNode: null,
                   onPressed: () {
                     BlocProvider.of<GameBloc>(context).add(PauseGameEvent());
                   },
@@ -65,6 +67,7 @@ class GameScreen extends StatelessWidget {
                 return IconButton(
                   icon: Icon(Icons.refresh),
                   tooltip: 'Restart',
+                  focusNode: null,
                   onPressed: () {
                     BlocProvider.of<GameBloc>(context).add(NewGameEvent());
                   },
@@ -125,7 +128,9 @@ class GameScreen extends StatelessWidget {
               _gameRenderer.updateSnake(state.snake);
             },
             child: BlocBuilder<GameBloc, GameState>(
-              condition: (before, after) => before.status != Status.loading,
+              condition: (before, current) =>
+                  before.status == Status.loading &&
+                  current.status != Status.loading,
               builder: (context, state) {
                 return state.status == Status.loading
                     ? Loading()

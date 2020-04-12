@@ -79,6 +79,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   }
 
   GameState _updateGame() {
+    print(state.toString());
     final oldSnake = state.snake;
     var newSnake = oldSnake?.move(state.velocity) ?? _newSnake();
     var score = 0;
@@ -169,6 +170,16 @@ class GameBloc extends Bloc<GameEvent, GameState> {
             status: Status.running,
           );
         }
+        break;
+      case NewGameEvent:
+        print('new game');
+        yield state.copyWith(
+          status: Status.running,
+          score: 0,
+          velocity: Vec2d(0, -1),
+          food: _getRandomFood(),
+          snake: _newSnake(),
+        );
         break;
     }
   }

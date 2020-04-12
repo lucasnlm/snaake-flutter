@@ -50,6 +50,8 @@ class GameState extends Equatable {
   @override
   bool get stringify => true;
 
+  /// Returns a copy of the current [GameState]
+  /// optionally changing some fields.
   GameState copyWith({
     Status status,
     int score,
