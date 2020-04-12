@@ -11,6 +11,15 @@ class LoadAssetsEvent extends GameEvent {}
 /// Called to update the game logic.
 class UpdateGame extends GameEvent {}
 
+/// Called to pause the game.
+class PauseGameEvent extends GameEvent {}
+
+/// Called to resume the game.
+class ResumeGameEvent extends GameEvent {}
+
+/// Called when user want to start a new game.
+class NewGameEvent extends GameEvent {}
+
 /// Called when the game board was created.
 class OnBoardCreatedEvent extends GameEvent {
   /// Convenient constructor.

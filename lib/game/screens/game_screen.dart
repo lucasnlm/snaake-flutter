@@ -40,6 +40,39 @@ class GameScreen extends StatelessWidget {
 
     final appBar = AppBar(
       title: const Text("Snaake"),
+      actions: <Widget>[
+        BlocBuilder<GameBloc, GameState>(
+          condition: (before, after) => before.status != after.status,
+          builder: (context, state) {
+            switch (state.status) {
+              case Status.pause:
+                return IconButton(
+                  icon: Icon(Icons.play_arrow),
+                  tooltip: 'Continue',
+                  onPressed: () {
+                    BlocProvider.of<GameBloc>(context).add(ResumeGameEvent());
+                  },
+                );
+              case Status.running:
+                return IconButton(
+                  icon: Icon(Icons.pause),
+                  tooltip: 'Pause',
+                  onPressed: () {
+                    BlocProvider.of<GameBloc>(context).add(PauseGameEvent());
+                  },
+                );
+              default:
+                return IconButton(
+                  icon: Icon(Icons.refresh),
+                  tooltip: 'Restart',
+                  onPressed: () {
+                    BlocProvider.of<GameBloc>(context).add(NewGameEvent());
+                  },
+                );
+            }
+          },
+        )
+      ],
     );
 
     final screen = _getScreenSize(

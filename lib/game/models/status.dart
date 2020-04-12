@@ -1,11 +1,14 @@
 /// The game status.
 enum Status {
-  /// The status while the game is being loaded.
+  /// While the game is being loaded.
   loading,
 
-  /// The status after the game was loaded.
+  /// After the game was loaded.
   running,
 
-  /// The status after the snake hit the wall or bite itself.
+  /// When the game is paused.
+  pause,
+
+  /// After the snake hit the wall or bite itself.
   gameOver,
 }

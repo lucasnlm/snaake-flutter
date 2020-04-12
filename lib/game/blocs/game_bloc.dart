@@ -158,6 +158,18 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           board: (event as OnBoardCreatedEvent).board,
         );
         break;
+      case PauseGameEvent:
+        yield state.copyWith(
+          status: Status.pause,
+        );
+        break;
+      case ResumeGameEvent:
+        if (state.status == Status.pause) {
+          yield state.copyWith(
+            status: Status.running,
+          );
+        }
+        break;
     }
   }
 }
