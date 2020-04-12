@@ -72,11 +72,6 @@ class SnakeComponent extends Component {
     if (snake != null) {
       final snakeBody = LinkedHashSet.from(snake.body).toList();
 
-      if (snakeBody[0].x == snakeBody[1].x &&
-          snakeBody[0].y == snakeBody[1].y) {
-        print('gfuuuuu');
-      }
-
       _snakeBody = <BoardComponent>[
         _buildHead(
           snakeBody[0],

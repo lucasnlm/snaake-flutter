@@ -40,7 +40,6 @@ class _IsState extends Matcher {
 
   @override
   bool matches(dynamic item, Map matchState) {
-    print("${item.snake.body.toList().toString()}");
     return listEquals(item.snake.body.toList(), snake) &&
         (food == null || item.food == food) &&
         (score == null || item.score == score) &&
