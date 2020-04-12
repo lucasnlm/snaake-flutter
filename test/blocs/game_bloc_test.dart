@@ -25,8 +25,8 @@ class _IsPosition extends Matcher {
   Description describe(Description description) => description.add('$x, $y');
 }
 
-class _Snake extends Matcher {
-  const _Snake(
+class _IsState extends Matcher {
+  const _IsState(
     this.snake, {
     this.food,
     this.score,
@@ -90,85 +90,85 @@ void main() {
           ..add(UpdateGame());
       },
       expect: [
-        _Snake([
+        _IsState([
           Vec2d(5, 10),
           Vec2d(5, 11),
           Vec2d(5, 12),
           Vec2d(5, 13),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(5, 9),
           Vec2d(5, 10),
           Vec2d(5, 11),
           Vec2d(5, 12),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(5, 9),
           Vec2d(5, 10),
           Vec2d(5, 11),
           Vec2d(5, 12),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(4, 9),
           Vec2d(5, 9),
           Vec2d(5, 10),
           Vec2d(5, 11),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(3, 9),
           Vec2d(4, 9),
           Vec2d(5, 9),
           Vec2d(5, 10),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(3, 9),
           Vec2d(4, 9),
           Vec2d(5, 9),
           Vec2d(5, 10),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(3, 8),
           Vec2d(3, 9),
           Vec2d(4, 9),
           Vec2d(5, 9),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(3, 7),
           Vec2d(3, 8),
           Vec2d(3, 9),
           Vec2d(4, 9),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(3, 7),
           Vec2d(3, 8),
           Vec2d(3, 9),
           Vec2d(4, 9),
         ]),
-        _Snake(<Vec2d>[
+        _IsState(<Vec2d>[
           Vec2d(4, 7),
           Vec2d(3, 7),
           Vec2d(3, 8),
           Vec2d(3, 9),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(5, 7),
           Vec2d(4, 7),
           Vec2d(3, 7),
           Vec2d(3, 8),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(5, 7),
           Vec2d(4, 7),
           Vec2d(3, 7),
           Vec2d(3, 8),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(5, 8),
           Vec2d(5, 7),
           Vec2d(4, 7),
           Vec2d(3, 7),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(5, 9),
           Vec2d(5, 8),
           Vec2d(5, 7),
@@ -205,85 +205,85 @@ void main() {
           ..add(UpdateGame());
       },
       expect: [
-        _Snake([
+        _IsState([
           Vec2d(5, 10),
           Vec2d(5, 11),
           Vec2d(5, 12),
           Vec2d(5, 13),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(5, 9),
           Vec2d(5, 10),
           Vec2d(5, 11),
           Vec2d(5, 12),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(5, 9),
           Vec2d(5, 10),
           Vec2d(5, 11),
           Vec2d(5, 12),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(4, 9),
           Vec2d(5, 9),
           Vec2d(5, 10),
           Vec2d(5, 11),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(3, 9),
           Vec2d(4, 9),
           Vec2d(5, 9),
           Vec2d(5, 10),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(3, 9),
           Vec2d(4, 9),
           Vec2d(5, 9),
           Vec2d(5, 10),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(3, 8),
           Vec2d(3, 9),
           Vec2d(4, 9),
           Vec2d(5, 9),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(3, 7),
           Vec2d(3, 8),
           Vec2d(3, 9),
           Vec2d(4, 9),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(3, 7),
           Vec2d(3, 8),
           Vec2d(3, 9),
           Vec2d(4, 9),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(4, 7),
           Vec2d(3, 7),
           Vec2d(3, 8),
           Vec2d(3, 9),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(5, 7),
           Vec2d(4, 7),
           Vec2d(3, 7),
           Vec2d(3, 8),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(5, 7),
           Vec2d(4, 7),
           Vec2d(3, 7),
           Vec2d(3, 8),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(5, 8),
           Vec2d(5, 7),
           Vec2d(4, 7),
           Vec2d(3, 7),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(5, 9),
           Vec2d(5, 8),
           Vec2d(5, 7),
@@ -305,14 +305,14 @@ void main() {
       },
       expect: [
         // Eat
-        _Snake(
+        _IsState(
           [Vec2d(5, 10), Vec2d(5, 11), Vec2d(5, 12), Vec2d(5, 13)],
           food: Food(x: 5, y: 9, score: 1),
           score: 0,
         ),
 
         // New score and food position
-        _Snake(
+        _IsState(
           [Vec2d(5, 9), Vec2d(5, 9), Vec2d(5, 10), Vec2d(5, 11), Vec2d(5, 12)],
           food: Food(x: 4, y: 19, score: 1),
           score: 1,
@@ -337,25 +337,25 @@ void main() {
           ..add(UpdateGame());
       },
       expect: [
-        _Snake([
+        _IsState([
           Vec2d(2, 2),
           Vec2d(2, 3),
           Vec2d(2, 4),
           Vec2d(2, 5),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(2, 1),
           Vec2d(2, 2),
           Vec2d(2, 3),
           Vec2d(2, 4),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(2, 0),
           Vec2d(2, 1),
           Vec2d(2, 2),
           Vec2d(2, 3),
         ]),
-        _Snake(
+        _IsState(
           [
             Vec2d(2, 0),
             Vec2d(2, 1),
@@ -383,31 +383,31 @@ void main() {
           ..add(UpdateGame());
       },
       expect: [
-        _Snake([
+        _IsState([
           Vec2d(2, 2),
           Vec2d(2, 3),
           Vec2d(2, 4),
           Vec2d(2, 5),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(2, 2),
           Vec2d(2, 3),
           Vec2d(2, 4),
           Vec2d(2, 5),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(1, 2),
           Vec2d(2, 2),
           Vec2d(2, 3),
           Vec2d(2, 4),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(0, 2),
           Vec2d(1, 2),
           Vec2d(2, 2),
           Vec2d(2, 3),
         ]),
-        _Snake(
+        _IsState(
           [
             Vec2d(0, 2),
             Vec2d(1, 2),
@@ -435,31 +435,31 @@ void main() {
           ..add(UpdateGame());
       },
       expect: [
-        _Snake([
+        _IsState([
           Vec2d(2, 2),
           Vec2d(2, 3),
           Vec2d(2, 4),
           Vec2d(2, 5),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(2, 2),
           Vec2d(2, 3),
           Vec2d(2, 4),
           Vec2d(2, 5),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(3, 2),
           Vec2d(2, 2),
           Vec2d(2, 3),
           Vec2d(2, 4),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(4, 2),
           Vec2d(3, 2),
           Vec2d(2, 2),
           Vec2d(2, 3),
         ]),
-        _Snake(
+        _IsState(
           [
             Vec2d(4, 2),
             Vec2d(3, 2),
@@ -489,43 +489,43 @@ void main() {
           ..add(UpdateGame());
       },
       expect: [
-        _Snake([
+        _IsState([
           Vec2d(2, 2),
           Vec2d(2, 3),
           Vec2d(2, 4),
           Vec2d(2, 5),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(2, 2),
           Vec2d(2, 3),
           Vec2d(2, 4),
           Vec2d(2, 5),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(3, 2),
           Vec2d(2, 2),
           Vec2d(2, 3),
           Vec2d(2, 4),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(3, 2),
           Vec2d(2, 2),
           Vec2d(2, 3),
           Vec2d(2, 4),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(3, 3),
           Vec2d(3, 2),
           Vec2d(2, 2),
           Vec2d(2, 3),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(3, 4),
           Vec2d(3, 3),
           Vec2d(3, 2),
           Vec2d(2, 2),
         ]),
-        _Snake(
+        _IsState(
           [
             Vec2d(3, 4),
             Vec2d(3, 3),
@@ -559,7 +559,7 @@ void main() {
           ..add(UpdateGame());
       },
       expect: [
-        _Snake([
+        _IsState([
           Vec2d(5, 10),
           Vec2d(5, 11),
           Vec2d(5, 12),
@@ -567,7 +567,7 @@ void main() {
           Vec2d(5, 14),
           Vec2d(5, 15),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(5, 10),
           Vec2d(5, 11),
           Vec2d(5, 12),
@@ -575,7 +575,7 @@ void main() {
           Vec2d(5, 14),
           Vec2d(5, 15),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(6, 10),
           Vec2d(5, 10),
           Vec2d(5, 11),
@@ -583,7 +583,7 @@ void main() {
           Vec2d(5, 13),
           Vec2d(5, 14),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(6, 10),
           Vec2d(5, 10),
           Vec2d(5, 11),
@@ -591,7 +591,7 @@ void main() {
           Vec2d(5, 13),
           Vec2d(5, 14),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(6, 11),
           Vec2d(6, 10),
           Vec2d(5, 10),
@@ -599,7 +599,7 @@ void main() {
           Vec2d(5, 12),
           Vec2d(5, 13),
         ]),
-        _Snake([
+        _IsState([
           Vec2d(6, 11),
           Vec2d(6, 10),
           Vec2d(5, 10),
@@ -607,7 +607,7 @@ void main() {
           Vec2d(5, 12),
           Vec2d(5, 13),
         ]),
-        _Snake(
+        _IsState(
           [
             Vec2d(6, 11),
             Vec2d(6, 10),
