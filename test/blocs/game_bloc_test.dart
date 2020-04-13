@@ -677,24 +677,60 @@ void main() {
         ],
         status: Status.pause,
       ),
-        _IsState([
-          Vec2d(5, 9),
-          Vec2d(5, 10),
-          Vec2d(5, 11),
-          Vec2d(5, 12),
-        ]),
-        _IsState([
-          Vec2d(5, 8),
-          Vec2d(5, 9),
-          Vec2d(5, 10),
-          Vec2d(5, 11),
-        ]),
-        _IsState([
-          Vec2d(5, 7),
-          Vec2d(5, 8),
-          Vec2d(5, 9),
-          Vec2d(5, 10),
-        ]),
+      _IsState([
+        Vec2d(5, 9),
+        Vec2d(5, 10),
+        Vec2d(5, 11),
+        Vec2d(5, 12),
+      ]),
+      _IsState([
+        Vec2d(5, 8),
+        Vec2d(5, 9),
+        Vec2d(5, 10),
+        Vec2d(5, 11),
+      ]),
+      _IsState([
+        Vec2d(5, 7),
+        Vec2d(5, 8),
+        Vec2d(5, 9),
+        Vec2d(5, 10),
+      ]),
+    ],
+  );
+
+  blocTest(
+    'test new game',
+    build: () async => GameBloc(
+      random: Random(200),
+    ),
+    skip: 3,
+    act: (bloc) async {
+      bloc
+        ..add(LoadAssetsEvent())
+        ..add(OnBoardCreatedEvent(Board(10, 20)))
+        ..add(UpdateGame())
+        ..add(UpdateGame())
+        ..add(NewGameEvent());
+    },
+    expect: [
+      _IsState([
+        Vec2d(5, 10),
+        Vec2d(5, 11),
+        Vec2d(5, 12),
+        Vec2d(5, 13),
+      ]),
+      _IsState([
+        Vec2d(5, 9),
+        Vec2d(5, 10),
+        Vec2d(5, 11),
+        Vec2d(5, 12),
+      ]),
+      _IsState([
+        Vec2d(5, 10),
+        Vec2d(5, 11),
+        Vec2d(5, 12),
+        Vec2d(5, 13),
+      ]),
     ],
   );
 }
