@@ -537,98 +537,96 @@ void main() {
     );
   });
 
-  group('test snake biting', () {
-    blocTest(
-      'itself',
-      build: () async => GameBloc(
-        random: Random(200),
-        snakeInitialLength: 6,
+  blocTest(
+    'test snake biting itself',
+    build: () async => GameBloc(
+      random: Random(200),
+      snakeInitialLength: 6,
+    ),
+    skip: 3,
+    act: (bloc) async {
+      bloc
+        ..add(LoadAssetsEvent())
+        ..add(OnBoardCreatedEvent(Board(10, 20)))
+        ..add(UpdateGame())
+        ..add(OnKeyPressedEvent(LogicalKeyboardKey.arrowRight))
+        ..add(UpdateGame())
+        ..add(OnKeyPressedEvent(LogicalKeyboardKey.arrowDown))
+        ..add(UpdateGame())
+        ..add(OnKeyPressedEvent(LogicalKeyboardKey.arrowLeft))
+        ..add(UpdateGame())
+        ..add(UpdateGame());
+    },
+    expect: [
+      _IsState([
+        Vec2d(5, 10),
+        Vec2d(5, 11),
+        Vec2d(5, 12),
+        Vec2d(5, 13),
+        Vec2d(5, 14),
+        Vec2d(5, 15),
+      ]),
+      _IsState([
+        Vec2d(5, 10),
+        Vec2d(5, 11),
+        Vec2d(5, 12),
+        Vec2d(5, 13),
+        Vec2d(5, 14),
+        Vec2d(5, 15),
+      ]),
+      _IsState([
+        Vec2d(6, 10),
+        Vec2d(5, 10),
+        Vec2d(5, 11),
+        Vec2d(5, 12),
+        Vec2d(5, 13),
+        Vec2d(5, 14),
+      ]),
+      _IsState([
+        Vec2d(6, 10),
+        Vec2d(5, 10),
+        Vec2d(5, 11),
+        Vec2d(5, 12),
+        Vec2d(5, 13),
+        Vec2d(5, 14),
+      ]),
+      _IsState([
+        Vec2d(6, 11),
+        Vec2d(6, 10),
+        Vec2d(5, 10),
+        Vec2d(5, 11),
+        Vec2d(5, 12),
+        Vec2d(5, 13),
+      ]),
+      _IsState([
+        Vec2d(6, 11),
+        Vec2d(6, 10),
+        Vec2d(5, 10),
+        Vec2d(5, 11),
+        Vec2d(5, 12),
+        Vec2d(5, 13),
+      ]),
+      _IsState(
+        [
+          Vec2d(5, 11),
+          Vec2d(6, 11),
+          Vec2d(6, 10),
+          Vec2d(5, 10),
+          Vec2d(5, 11),
+          Vec2d(5, 12),
+        ],
       ),
-      skip: 3,
-      act: (bloc) async {
-        bloc
-          ..add(LoadAssetsEvent())
-          ..add(OnBoardCreatedEvent(Board(10, 20)))
-          ..add(UpdateGame())
-          ..add(OnKeyPressedEvent(LogicalKeyboardKey.arrowRight))
-          ..add(UpdateGame())
-          ..add(OnKeyPressedEvent(LogicalKeyboardKey.arrowDown))
-          ..add(UpdateGame())
-          ..add(OnKeyPressedEvent(LogicalKeyboardKey.arrowLeft))
-          ..add(UpdateGame())
-          ..add(UpdateGame());
-      },
-      expect: [
-        _IsState([
-          Vec2d(5, 10),
+      _IsState(
+        [
           Vec2d(5, 11),
-          Vec2d(5, 12),
-          Vec2d(5, 13),
-          Vec2d(5, 14),
-          Vec2d(5, 15),
-        ]),
-        _IsState([
-          Vec2d(5, 10),
-          Vec2d(5, 11),
-          Vec2d(5, 12),
-          Vec2d(5, 13),
-          Vec2d(5, 14),
-          Vec2d(5, 15),
-        ]),
-        _IsState([
-          Vec2d(6, 10),
-          Vec2d(5, 10),
-          Vec2d(5, 11),
-          Vec2d(5, 12),
-          Vec2d(5, 13),
-          Vec2d(5, 14),
-        ]),
-        _IsState([
-          Vec2d(6, 10),
-          Vec2d(5, 10),
-          Vec2d(5, 11),
-          Vec2d(5, 12),
-          Vec2d(5, 13),
-          Vec2d(5, 14),
-        ]),
-        _IsState([
           Vec2d(6, 11),
           Vec2d(6, 10),
           Vec2d(5, 10),
           Vec2d(5, 11),
           Vec2d(5, 12),
-          Vec2d(5, 13),
-        ]),
-        _IsState([
-          Vec2d(6, 11),
-          Vec2d(6, 10),
-          Vec2d(5, 10),
-          Vec2d(5, 11),
-          Vec2d(5, 12),
-          Vec2d(5, 13),
-        ]),
-        _IsState(
-          [
-            Vec2d(5, 11),
-            Vec2d(6, 11),
-            Vec2d(6, 10),
-            Vec2d(5, 10),
-            Vec2d(5, 11),
-            Vec2d(5, 12),
-          ],
-        ),
-        _IsState(
-          [
-            Vec2d(5, 11),
-            Vec2d(6, 11),
-            Vec2d(6, 10),
-            Vec2d(5, 10),
-            Vec2d(5, 11),
-            Vec2d(5, 12),
-          ],
-          status: Status.gameOver,
-        ),
-      ],
-    );
-  });
+        ],
+        status: Status.gameOver,
+      ),
+    ],
+  );
 }
