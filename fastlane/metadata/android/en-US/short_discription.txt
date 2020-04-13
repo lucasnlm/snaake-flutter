@@ -1,0 +1,1 @@
+Remember the classic game. Control the snake and avoid hitting its tail.

@@ -1,0 +1,5 @@
+The objective is very simple: eat the colorful dots to make the snake longer and to avoid biting itself or hit the wall.
+
+Controls:
+- Swipe your finger horizontally to turn left/right.
+- Swipe your finger vertically to turn up/down.
