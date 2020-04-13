@@ -2,13 +2,18 @@ import 'package:flutter/widgets.dart';
 
 import '../../ui/colors.dart';
 
+/// Pause widget shown when the game is paused.
 class PauseWidget extends StatelessWidget {
+  /// Conveninent constructor.
   PauseWidget({
     this.text,
     this.onTap,
   });
 
+  /// On tap widget callback.
   final GestureTapCallback onTap;
+
+  /// The text to be shown.
   final String text;
 
   @override

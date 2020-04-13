@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-/// Loading width shown while loading.
+/// Loading widget shown while loading.
 class LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
