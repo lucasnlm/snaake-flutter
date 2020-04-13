@@ -14,11 +14,11 @@
    viewBox="0 0 31.999999 31.999999"
    id="svg2"
    version="1.1"
-   inkscape:version="0.91 r13725"
-   sodipodi:docname="snake_body.svg"
-   inkscape:export-filename="F:\Android\Snake\svg_sources\sprites\snake_head.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   inkscape:version="0.92.4 5da689c313, 2019-01-14"
+   sodipodi:docname="body.svg"
+   inkscape:export-filename="body.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -28,17 +28,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6"
-     inkscape:cx="27.65376"
-     inkscape:cy="6.0338936"
+     inkscape:zoom="22.4"
+     inkscape:cx="-6.0644498"
+     inkscape:cy="13.836109"
      inkscape:document-units="px"
      inkscape:current-layer="g4335"
      showgrid="false"
      units="px"
      inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-height="1015"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -48,7 +48,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -80,7 +80,7 @@
               <g
                  id="g4335">
                 <rect
-                   style="opacity:1;fill:#8bc249;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.24699999;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+                   style="opacity:1;fill:#0ec249;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.24699999;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
                    id="rect4148"
                    width="46.663898"
                    height="48.76313"

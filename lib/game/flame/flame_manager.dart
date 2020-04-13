@@ -11,7 +11,6 @@ class FlameManager with IFlameManager {
   @override
   Future<void> setup() async {
     final flameUtil = Util();
-    await flameUtil.fullScreen();
     await flameUtil.setOrientation(DeviceOrientation.portraitUp);
 
     await Flame.images.loadAll(<String>[

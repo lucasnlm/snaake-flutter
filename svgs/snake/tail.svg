@@ -14,8 +14,8 @@
    viewBox="0 0 31.999999 31.999999"
    id="svg2"
    version="1.1"
-   inkscape:version="0.91 r13725"
-   sodipodi:docname="snake_tail.svg"
+   inkscape:version="0.92.4 5da689c313, 2019-01-14"
+   sodipodi:docname="tail.svg"
    inkscape:export-filename="F:\Android\Snake\svg_sources\sprites\snake_tail.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
@@ -28,17 +28,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="7.9195959"
-     inkscape:cx="-36.557224"
-     inkscape:cy="17.342435"
+     inkscape:zoom="31.678384"
+     inkscape:cx="14.365774"
+     inkscape:cy="13.841497"
      inkscape:document-units="px"
      inkscape:current-layer="g4344"
      showgrid="false"
      units="px"
      inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-height="1015"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -48,7 +48,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -83,8 +83,8 @@
                    id="g4344"
                    transform="matrix(0.91666651,0,0,1,22.406566,0)">
                   <path
-                     style="opacity:1;fill:#8bc249;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.24699999;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-                     d="m 250.21271,58.281438 0,3.80962 0,3.80962 0.1175,0 c 1.16341,21.414543 12.01591,38.096192 25.33554,38.096192 13.31963,0 24.17213,-16.681649 25.33554,-38.096192 l 0.1175,0 0,-3.80962 0,-3.80962 -50.90608,0 z"
+                     style="opacity:1;fill:#0ec249;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2527802;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+                     d="m 250.21271,58.281438 v 3.990009 3.990009 h 0.1175 c 1.16341,22.428541 12.01591,39.900084 25.33554,39.900084 13.31963,0 24.17213,-17.471543 25.33554,-39.900084 h 0.1175 v -3.990009 -3.990009 z"
                      id="rect4374"
                      inkscape:connector-curvature="0" />
                 </g>

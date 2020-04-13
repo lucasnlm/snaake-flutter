@@ -14,11 +14,11 @@
    viewBox="0 0 31.999999 31.999999"
    id="svg2"
    version="1.1"
-   inkscape:version="0.91 r13725"
-   sodipodi:docname="snake_body_curve.svg"
+   inkscape:version="0.92.4 5da689c313, 2019-01-14"
+   sodipodi:docname="body_curve.svg"
    inkscape:export-filename="F:\Android\Snake\svg_sources\sprites\snake_body_curve.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -28,17 +28,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="31.678384"
-     inkscape:cx="1.8517608"
-     inkscape:cy="22.104913"
+     inkscape:zoom="5.6"
+     inkscape:cx="2.7312538"
+     inkscape:cy="17.933456"
      inkscape:document-units="px"
      inkscape:current-layer="g4344"
      showgrid="false"
      units="px"
      inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-height="1015"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -48,7 +48,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -83,31 +83,31 @@
                    id="g4344"
                    transform="matrix(0.91666651,0,0,1,22.406566,0)">
                   <rect
-                     style="opacity:1;fill:#8bc249;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.24699999;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+                     style="opacity:1;fill:#0ec249;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.16997948;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
                      id="rect4142"
                      width="50.906082"
-                     height="36.57235"
+                     height="17.320162"
                      x="250.21271"
-                     y="70.472221" />
+                     y="89.724411" />
                   <rect
-                     style="display:inline;opacity:1;fill:#8bc249;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.24699999;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter4235)"
+                     style="display:inline;opacity:1;fill:#0ec249;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.14745688;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter4235)"
                      id="rect4142-4"
-                     width="40.724865"
+                     width="14.514291"
                      height="45.715435"
-                     x="262.09079"
+                     x="288.30136"
                      y="59.805286" />
                   <path
-                     style="opacity:1;fill:#8bc249;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.24699999;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+                     style="opacity:1;fill:#0ec249;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.75331646;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
                      id="path4159"
                      sodipodi:type="arc"
-                     sodipodi:cx="-70.624603"
-                     sodipodi:cy="262.26047"
-                     sodipodi:rx="10.81932"
-                     sodipodi:ry="12.047772"
+                     sodipodi:cx="-90.761169"
+                     sodipodi:cy="289.38007"
+                     sodipodi:rx="30.955883"
+                     sodipodi:ry="39.167385"
                      sodipodi:start="4.712389"
                      sodipodi:end="0"
-                     d="m -70.624603,250.2127 a 10.81932,12.047772 0 0 1 10.819319,12.04777 l -10.819319,0 z"
-                     transform="matrix(0,-1,1,0,0,0)" />
+                     d="m -90.761169,250.21268 a 30.955883,39.167385 0 0 1 30.955883,39.16739 h -30.955883 z"
+                     transform="rotate(-90)" />
                 </g>
               </g>
             </g>
