@@ -138,7 +138,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   Stream<GameState> mapEventToState(GameEvent event) async* {
     switch (event.runtimeType) {
       case UpdateGame:
-        if (state.board != null) {
+        if (state.board != null && state.status == Status.running) {
           yield _updateGame();
         }
         break;
