@@ -18,4 +18,6 @@ class GameColors {
 
   /// The color used to draw the chess background.
   static const backgroundChess = Color(0xFFB3B3B3);
+
+  static const pauseBackground = Color(0x66000000);
 }

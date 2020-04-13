@@ -3,7 +3,7 @@ description: Snaake is a small and very simple clone of the classic snake game f
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.3.0 <3.0.0"
+  sdk: ">=2.7.0  <3.0.0"
 
 dependencies:
   flutter:
@@ -24,4 +24,3 @@ flutter:
   assets:
     - assets/images/food/
     - assets/images/snake/
-

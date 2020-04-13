@@ -9,7 +9,8 @@ import '../blocs/game_state.dart';
 import '../models/board.dart';
 import '../models/status.dart';
 import '../renderer/game_renderer.dart';
-import '../widgetss/loading.dart';
+import '../widgets/loading_widget.dart';
+import '../widgets/pause_widget.dart';
 
 /// Main game screen.
 class GameScreen extends StatelessWidget {
@@ -128,13 +129,26 @@ class GameScreen extends StatelessWidget {
               _gameRenderer.updateSnake(state.snake);
             },
             child: BlocBuilder<GameBloc, GameState>(
-              condition: (before, current) =>
-                  before.status == Status.loading &&
-                  current.status != Status.loading,
+              condition: (before, current) => before.status != current.status,
               builder: (context, state) {
+                final bloc = BlocProvider.of<GameBloc>(context);
                 return state.status == Status.loading
-                    ? Loading()
-                    : _gameRenderer.widget;
+                    ? LoadingWidget()
+                    : Stack(
+                        children: <Widget>[
+                          _gameRenderer.widget,
+                          if (state.status == Status.pause)
+                            PauseWidget(
+                              text: 'Tap to resume',
+                              onTap: () => bloc.add(ResumeGameEvent()),
+                            ),
+                          if (state.status == Status.gameOver)
+                            PauseWidget(
+                              text: 'Tap to start a new game',
+                              onTap: () => bloc.add(NewGameEvent()),
+                            )
+                        ],
+                      );
               },
             ),
           ),
