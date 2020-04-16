@@ -10,13 +10,13 @@ dependencies:
     sdk: flutter
   flame: ^0.19.0
   bloc: ^3.0.0
-  bloc_test: ^4.0.0
   flutter_bloc: ^3.2.0
   equatable: ^1.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  bloc_test: ^4.0.0
   effective_dart: ^1.2.0
 
 flutter:
