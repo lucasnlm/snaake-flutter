@@ -10,7 +10,7 @@ import '../models/vec2d.dart';
 /// Representation of the game state.
 class GameState extends Equatable {
   /// Convenient constructor.
-  GameState({
+  const GameState({
     @required this.velocity,
     this.status = Status.loading,
     this.score = 0,

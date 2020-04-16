@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:math';
 
 import 'package:bloc_test/bloc_test.dart';
@@ -6,9 +7,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:snaake/game/blocs/game_bloc.dart';
 import 'package:snaake/game/blocs/game_events.dart';
+import 'package:snaake/game/blocs/game_state.dart';
 import 'package:snaake/game/models/board.dart';
 import 'package:snaake/game/models/food.dart';
 import 'package:snaake/game/models/status.dart';
+import 'package:snaake/game/models/snake.dart';
 import 'package:snaake/game/models/vec2d.dart';
 
 class _IsPosition extends Matcher {
@@ -304,17 +307,42 @@ void main() {
       },
       expect: [
         // Eat
-        _IsState(
-          [Vec2d(5, 10), Vec2d(5, 11), Vec2d(5, 12), Vec2d(5, 13)],
-          food: Food(x: 5, y: 9, score: 1),
+        GameState(
+          status: Status.running,
           score: 0,
+          velocity: Vec2d(0, -1),
+          snake: Snake(
+            Queue.of(
+              [
+                Vec2d(5, 10),
+                Vec2d(5, 11),
+                Vec2d(5, 12),
+                Vec2d(5, 13),
+              ],
+            ),
+          ),
+          food: Food(x: 5, y: 9, score: 1),
+          board: Board(10, 20),
         ),
 
         // New score and food position
-        _IsState(
-          [Vec2d(5, 9), Vec2d(5, 9), Vec2d(5, 10), Vec2d(5, 11), Vec2d(5, 12)],
-          food: Food(x: 4, y: 19, score: 1),
+        GameState(
+          status: Status.running,
           score: 1,
+          velocity: Vec2d(0, -1),
+          snake: Snake(
+            Queue.of(
+              [
+                Vec2d(5, 9),
+                Vec2d(5, 9),
+                Vec2d(5, 10),
+                Vec2d(5, 11),
+                Vec2d(5, 12),
+              ],
+            ),
+          ),
+          food: Food(x: 4, y: 19, score: 1),
+          board: Board(10, 20),
         ),
       ],
     );

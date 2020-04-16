@@ -7,7 +7,7 @@ import '../models/vec2d.dart';
 /// Represents the Snake.
 class Snake extends Equatable {
   /// Creates a Snake given its body positions.
-  Snake(this.body) : assert(body != null && body.length >= 4);
+  const Snake(this.body) : assert(body != null && body.length >= 4);
 
   /// Creates a Snake given the head position and its length.
   Snake.fromPosition(int x, int y, int length)
