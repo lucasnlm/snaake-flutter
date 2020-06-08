@@ -31,7 +31,7 @@ class GameState extends Equatable {
   /// Snake position.
   final Snake snake;
 
-  /// A [Vec2d] with velocity and diration.
+  /// A [Vec2d] with velocity and direction.
   final Vec2d velocity;
 
   /// Game [Board] available.

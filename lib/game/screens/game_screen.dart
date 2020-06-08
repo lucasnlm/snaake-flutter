@@ -14,7 +14,7 @@ import '../widgets/pause_widget.dart';
 
 /// Main game screen.
 class GameScreen extends StatelessWidget {
-  /// Conveninent constructor.
+  /// Convenient constructor.
   GameScreen({
     Key key,
   }) : super(key: key);

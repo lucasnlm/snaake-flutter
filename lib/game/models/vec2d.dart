@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 
-/// Representes a 2D vector using ints.
+/// Represents a 2D vector using ints.
 class Vec2d extends Equatable {
-  /// Covenient constructor. Given [x] and [y] positions.
+  /// Convenient constructor. Given [x] and [y] positions.
   Vec2d(this.x, this.y);
 
   /// The vector x position.
@@ -15,7 +15,7 @@ class Vec2d extends Equatable {
   List<Object> get props => [x, y];
 
   /// Creates a copy of the current [Vec2d].
-  /// It may also be used to get a copy of it chaging one of its fields.
+  /// It may also be used to get a copy of it changing one of its fields.
   Vec2d copyWith({
     int x,
     int y,

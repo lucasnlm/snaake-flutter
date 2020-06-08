@@ -70,7 +70,7 @@ class SnakeComponent extends Component {
   /// Update the snake position using [snake] info.
   void updateSnake(Snake snake) {
     if (snake != null) {
-      final snakeBody = snake.hasBitenItself()
+      final snakeBody = snake.hasBittenItself()
           ? snake.body.toList()
           : LinkedHashSet.from(snake.body).toList();
 

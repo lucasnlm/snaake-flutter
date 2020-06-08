@@ -35,7 +35,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   /// The snake initial length. Default value is 4.
   final int snakeInitialLength;
 
-  /// The game update period in miliseconds.
+  /// The game update period in milliseconds.
   final int updatePeriod;
 
   @override
@@ -90,7 +90,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         (newSnake.head.y >= state.board.height || newSnake.head.y < 0)) {
       newSnake = oldSnake;
       status = Status.gameOver;
-    } else if (oldSnake?.hasBitenItself() ?? false) {
+    } else if (oldSnake?.hasBittenItself() ?? false) {
       newSnake = oldSnake;
       status = Status.gameOver;
     } else {

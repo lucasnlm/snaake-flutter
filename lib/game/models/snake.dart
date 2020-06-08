@@ -27,7 +27,7 @@ class Snake extends Equatable {
   }
 
   /// Check if Snake has biten itself.
-  bool hasBitenItself() => body.skip(2).where((it) => it == head).isNotEmpty;
+  bool hasBittenItself() => body.skip(2).where((it) => it == head).isNotEmpty;
 
   /// Move the Snake to a new position given a [velocity].
   /// Returns a new Snake after the movement.
