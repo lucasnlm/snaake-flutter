@@ -4,7 +4,7 @@ import '../../ui/colors.dart';
 
 /// Pause widget shown when the game is paused.
 class PauseWidget extends StatelessWidget {
-  /// Conveninent constructor.
+  /// Convenient constructor.
   PauseWidget({
     this.text,
     this.onTap,

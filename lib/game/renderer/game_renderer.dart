@@ -10,10 +10,10 @@ import '../models/snake.dart';
 import 'board_component.dart';
 import 'snake_component.dart';
 
-/// Main game render. Used to render the game screeen.
+/// Main game render. Used to render the game screen.
 class GameRenderer extends Game {
-  /// Convenient construcotr.
-  /// It requires the [screen] real dimention, the [board] size,
+  /// Convenient constructor.
+  /// It requires the [screen] real dimension, the [board] size,
   /// and the [tileSize] used to render the food and snake.
   GameRenderer({
     @required this.screen,
