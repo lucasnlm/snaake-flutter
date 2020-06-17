@@ -27,7 +27,7 @@ class GameRenderer extends Game {
   /// The real screen size.
   final Rect screen;
 
-  /// The boar size.
+  /// The board size.
   final Board board;
 
   /// The tile size used to render the food and snake.
