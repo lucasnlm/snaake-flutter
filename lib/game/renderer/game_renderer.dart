@@ -77,7 +77,7 @@ class GameRenderer extends Game {
     paint.color = GameColors.backgroundChess;
     for (var i = 0; i < board.width; i++) {
       for (var j = 0; j < board.height; j++) {
-        if ((j * board.width + i) % 2 == (j % 2)) {
+        if ((j + i) % 2 == 0) {
           canvas.drawRect(
             Rect.fromLTWH(
               tileSize * i,
